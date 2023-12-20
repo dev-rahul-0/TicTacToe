@@ -1,16 +1,8 @@
 # tiktak
 
-A new Flutter project.
+A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive gameplay and vibrant visuals for endless strategic fun!
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ScreenShot
+![Screenshot 2023-12-20 225711](https://github.com/dev-rahul-0/tiktak/assets/114253454/1a70deb3-7075-44ec-8be8-c0144d14a1a5)
+![Screenshot 2023-12-20 225729](https://github.com/dev-rahul-0/tiktak/assets/114253454/ab8f1c7f-08d9-4dbf-abd7-150a45d7058b)
+![Screenshot 2023-12-20 225740](https://github.com/dev-rahul-0/tiktak/assets/114253454/097552af-ef0f-4acd-9844-134592f37a81)
