@@ -2,7 +2,54 @@
 
 A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive gameplay and vibrant visuals for endless strategic fun!
 
-## ScreenShot
-![Screenshot 2023-12-20 225711](https://github.com/dev-rahul-0/tiktak/assets/114253454/1a70deb3-7075-44ec-8be8-c0144d14a1a5)
-![Screenshot 2023-12-20 225729](https://github.com/dev-rahul-0/tiktak/assets/114253454/ab8f1c7f-08d9-4dbf-abd7-150a45d7058b)
-![Screenshot 2023-12-20 225740](https://github.com/dev-rahul-0/tiktak/assets/114253454/097552af-ef0f-4acd-9844-134592f37a81)
+## Screenshots
+
+| Message Toast          | Widget Toast                   |  Hello                           |
+| ---------------------- | ------------------------------ | ---------------------------------|
+| <img src="screenshots/screenshot1.png" alt="Message Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot2.png" alt="Widget Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot3.png" alt="Hello image" style="zoom:33%;" /> |
+
+## Installation
+
+1. Clone this repo
+```sh
+git clone https://github.com/VikramadityaDev/Direct-Downloader
+```
+2. run this command to fetch the dependencies
+```sh
+flutter pub get
+```
+3. now build your APK using following command:
+```sh
+$ flutter build apk 
+```
+
+## Prerequisites
+
+- Flutter SDK
+
+
+## License
+
+```sh
+MIT License
+
+Copyright (c) 2023 Rahul Sharma
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
