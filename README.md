@@ -1,4 +1,4 @@
-# tiktak
+# TicTacToe
 
 A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive gameplay and vibrant visuals for endless strategic fun!
 
