@@ -4,8 +4,8 @@ A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive ga
 
 ## Screenshots
 
-| Message Toast          | Widget Toast                   |  Hello                           |
-| ---------------------- | ------------------------------ | ---------------------------------|
+| Home Screen            | Player Screen             |  winner screen              |
+| ---------------------- | ------------------------- | ----------------------------|
 | <img src="screenshots/screenshot1.png" alt="Message Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot2.png" alt="Widget Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot3.png" alt="Hello image" style="zoom:33%;" /> |
 
 ## Installation
