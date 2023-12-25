@@ -12,7 +12,7 @@ A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive ga
 
 1. Clone this repo
 ```sh
-git clone https://github.com/VikramadityaDev/Direct-Downloader
+git clone https://github.com/dev-rahul-0/TicTacToe
 ```
 2. run this command to fetch the dependencies
 ```sh
