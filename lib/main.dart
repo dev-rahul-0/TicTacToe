@@ -189,11 +189,11 @@ class _HomePageState extends State<HomePage> {
       barrierDismissible: false,
         context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: const Text("Draw"),
+        title: const Text("Draw!!"),
         actions: [
           OutlinedButton(onPressed: (){
             Navigator.of(context).pop();
-          }, child: const Text('Play Again'))
+          }, child: const Text('Play Again!'))
         ],
       );
     });
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             OutlinedButton(onPressed: (){
               Navigator.of(context).pop();
-            }, child: const Text('Play Again')
+            }, child: const Text('Play Again!')
             )
           ],
         );
