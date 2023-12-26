@@ -9,9 +9,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: const HomePage(),
     );
   }
 }
@@ -27,62 +29,66 @@ class _HomePageState extends State<HomePage> {
   bool oTurn = true;
   int oScore = 0;
   int xScore = 0;
-  List<String> displayElement = [
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ];
+  List<String> displayElement = ['', '', '', '', '', '', '', '', ''];
   int filledBoxes = 0;
+  bool isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black38,
+      appBar: AppBar(
+        title: const Text('Tic Tac Toe'),
+        actions: [
+          IconButton(
+            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              setState(() {
+                isDarkMode = !isDarkMode;
+              });
+            },
+          ),
+        ],
+      ),
+      backgroundColor: isDarkMode ? Colors.black38 : Colors.white,
       body: Column(
         children: [
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(30),
+                Padding(
+                  padding: const EdgeInsets.all(30),
                   child: Text(
                     'Player X',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: _getTextColor()),
                   ),
                 ),
                 Text(
-                  "= "+xScore.toString(),
-                  style: const TextStyle(
+                  "= $xScore",
+                  style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: _getTextColor()),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(30),
+                Padding(
+                  padding: const EdgeInsets.all(30),
                   child: Text(
                     'Player 0',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: _getTextColor()),
                   ),
                 ),
                 Text(
-                  "= "+oScore.toString(),
-                  style: const TextStyle(
+                  "= $oScore",
+                  style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: _getTextColor()),
                 ),
               ],
             ),
@@ -100,12 +106,13 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
+                        border: Border.all(color: _getBorderColor()),
                       ),
                       child: Center(
                         child: Text(
                           displayElement[index],
-                          style: const TextStyle(color: Colors.white, fontSize: 35),
+                          style:
+                              TextStyle(color: _getTextColor(), fontSize: 35),
                         ),
                       ),
                     ),
@@ -113,17 +120,26 @@ class _HomePageState extends State<HomePage> {
                 }),
           ),
           Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: _clearScoreBoard, child: const Text("Clear Score Board"))
-                ],
-              )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: _clearScoreBoard,
+                    child: const Text("Clear Score Board"))
+              ],
+            ),
+          ),
         ],
       ),
     );
+  }
 
+  Color _getTextColor() {
+    return isDarkMode ? Colors.white : Colors.black;
+  }
+
+  Color _getBorderColor() {
+    return isDarkMode ? Colors.white : Colors.black;
   }
 
   void _tapped(int index) {
@@ -139,6 +155,7 @@ class _HomePageState extends State<HomePage> {
       _checkWinner();
     });
   }
+
   void _checkWinner() {
     if (displayElement[0] == displayElement[1] &&
         displayElement[0] == displayElement[2] &&
@@ -184,19 +201,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _showDrawDialog(){
+  void _showDrawDialog() {
     showDialog(
-      barrierDismissible: false,
-        context: context, builder: (BuildContext context){
-      return AlertDialog(
-        title: const Text("Draw"),
-        actions: [
-          OutlinedButton(onPressed: (){
-            Navigator.of(context).pop();
-          }, child: const Text('Play Again'))
-        ],
-      );
-    });
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Draw"),
+            actions: [
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Play Again'))
+            ],
+          );
+        });
   }
 
   void _clearScoreBoard() {
@@ -209,21 +229,23 @@ class _HomePageState extends State<HomePage> {
     });
     filledBoxes = 0;
   }
+
   void _showWinDialog(String winner) {
     showDialog(
         barrierDismissible: false,
-        context: context, builder:(BuildContext context){
-        return AlertDialog(
-          title: Text("\" " +winner+ "\" is winner!!!"),
-          actions: [
-            OutlinedButton(onPressed: (){
-              Navigator.of(context).pop();
-            }, child: const Text('Play Again')
-            )
-          ],
-        );
-
-    });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("\" $winner\" is winner!!!"),
+            actions: [
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Play Again'))
+            ],
+          );
+        });
     if (winner == 'O') {
       oScore++;
     } else if (winner == 'X') {
