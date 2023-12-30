@@ -39,10 +39,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tic Tac Toe'),
+        title: Text(
+          'Supper Tic Tac Toe',
+          style: TextStyle(color: !isDarkMode ? Colors.black : Colors.white),
+        ),
+        backgroundColor: isDarkMode ? Colors.black : Colors.white,
         actions: [
           IconButton(
-            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: !isDarkMode ? Colors.black : Colors.white),
             onPressed: () {
               setState(() {
                 isDarkMode = !isDarkMode;
@@ -65,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: _getTextColor()),
+                        color: getTextColor()),
                   ),
                 ),
                 Text(
@@ -73,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _getTextColor(),
+                    color: getTextColor(),
                   ),
                 ),
                 Padding(
@@ -83,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: _getTextColor(),
+                      color: getTextColor(),
                     ),
                   ),
                 ),
@@ -92,16 +97,17 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _getTextColor(),
+                    color: getTextColor(),
                   ),
                 ),
               ],
             ),
           ),
           MainBoard(
-              getBorderColor: _getBorderColor(),
+              getBigBorderColor: getBigBorderColor(),
+              getSmallBorderColor: getSmallBorderColor(),
               displayElement: displayElement,
-              getTextColor: _getTextColor(),
+              getTextColor: getTextColor(),
               tapped: _tapped),
           Expanded(
             child: Row(
@@ -119,12 +125,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Color _getTextColor() {
+  Color getTextColor() {
     return isDarkMode ? Colors.white : Colors.black;
   }
 
-  Color _getBorderColor() {
+  Color getSmallBorderColor() {
     return isDarkMode ? Colors.white : Colors.black;
+  }
+
+  Color getBigBorderColor() {
+    return isDarkMode
+        ? Color.fromARGB(255, 60, 255, 0)
+        : Color.fromARGB(255, 255, 0, 0);
   }
 
   void _tapped(int index) {
