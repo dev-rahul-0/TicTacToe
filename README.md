@@ -1,32 +1,42 @@
 # TicTacToe
 
-A classic game of Tic Tac Toe brought to life in Flutter, featuring intuitive gameplay and vibrant visuals for endless strategic fun!
+SuperTicTacToe-Flutter, a fun and strategic adaptation of the classic Tic-Tac-Toe game built with the Flutter framework. Super Tic-Tac-Toe adds an exciting twist to the traditional game by challenging players to win not only in individual mini-grids but also strategically control the larger grid.
 
 ## Screenshots
 
-| Home Screen            | Player Screen             |  winner screen              |
-| ---------------------- | ------------------------- | ----------------------------|
-| <img src="screenshots/screenshot1.png" alt="Message Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot2.png" alt="Widget Toast Image" style="zoom:33%;" /> | <img src="screenshots/screenshot3.png" alt="Hello image" style="zoom:33%;" /> |
+<img src="screenshots/Screenshot from 2023-12-30 11-47-12.png" alt="Widget Toast Image" style="zoom:33%;" />
+
+| Screenshot 1 | Screenshot 2 |
+| --- | --- |
+| <img src="screenshots/Screenshot from 2023-12-30 11-50-17.png" alt="Screenshot 1" style="zoom:33%;" /> | <img src="screenshots/Screenshot from 2023-12-30 11-58-31.png" alt="Screenshot 2" style="zoom:33%;" /> |
+
+
+
+
 
 ## Installation
 
 1. Clone this repo
+
 ```sh
-git clone https://github.com/dev-rahul-0/TicTacToe
+git clone https://github.com/ahbarabdellah/SupperTicTacToe
 ```
+
 2. run this command to fetch the dependencies
+
 ```sh
 flutter pub get
 ```
+
 3. now build your APK using following command:
+
 ```sh
-$ flutter build apk 
+flutter build apk 
 ```
 
 ## Prerequisites
 
 - Flutter SDK
-
 
 ## License
 
