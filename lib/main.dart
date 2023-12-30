@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tiktak/widgets/mainboard.dart';
+import 'package:tiktak/widgets/minitictactoe.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +31,53 @@ class _HomePageState extends State<HomePage> {
   bool oTurn = true;
   int oScore = 0;
   int xScore = 0;
-  List<String> displayElement = ['', '', '', '', '', '', '', '', ''];
+  List<List<String>> displayElement = [
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ]
+  ];
   int filledBoxes = 0;
   bool isDarkMode = false;
 
@@ -37,10 +85,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tic Tac Toe'),
+        title: Text(
+          'Supper Tic Tac Toe',
+          style: TextStyle(color: !isDarkMode ? Colors.black : Colors.white),
+        ),
+        backgroundColor: isDarkMode ? Colors.black : Colors.white,
         actions: [
           IconButton(
-            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: !isDarkMode ? Colors.black : Colors.white),
             onPressed: () {
               setState(() {
                 isDarkMode = !isDarkMode;
@@ -63,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: _getTextColor()),
+                        color: getTextColor()),
                   ),
                 ),
                 Text(
@@ -71,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _getTextColor(),
+                    color: getTextColor(),
                   ),
                 ),
                 Padding(
@@ -81,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: _getTextColor(),
+                      color: getTextColor(),
                     ),
                   ),
                 ),
@@ -90,40 +143,18 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _getTextColor(),
+                    color: getTextColor(),
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            flex: 4,
-            child: GridView.builder(
-                itemCount: 9,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _tapped(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: _getBorderColor(),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          displayElement[index],
-                          style:
-                              TextStyle(color: _getTextColor(), fontSize: 35),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          ),
+          MainBoard(
+              getBigBorderColor: getBigBorderColor(),
+              getSmallBorderColor: getSmallBorderColor(),
+              displayElement: displayElement,
+              getTextColor: getTextColor(),
+              tapped: _tapped),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -140,71 +171,98 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Color _getTextColor() {
+  Color getTextColor() {
     return isDarkMode ? Colors.white : Colors.black;
   }
 
-  Color _getBorderColor() {
+  Color getSmallBorderColor() {
     return isDarkMode ? Colors.white : Colors.black;
   }
 
-  void _tapped(int index) {
+  Color getBigBorderColor() {
+    return isDarkMode
+        ? Color.fromARGB(255, 60, 255, 0)
+        : Color.fromARGB(255, 255, 0, 0);
+  }
+
+  void _tapped(int mainBoardIndex, int miniBoardIndex) {
     setState(() {
-      if (oTurn && displayElement[index] == '') {
-        displayElement[index] = 'O';
+      // Your logic here for what happens when a cell is tapped
+      // This is just a placeholder logic to put an 'X' or 'O'
+      String currentValue = displayElement[mainBoardIndex][miniBoardIndex];
+      // Check if the selected cell is empty
+      if (currentValue == '') {
+        // Determine the current player
+        String currentPlayer = oTurn ? 'O' : 'X';
+
+        // Update the selected cell with the current player's symbol
+        displayElement[mainBoardIndex][miniBoardIndex] = currentPlayer;
+
+        // Check for a winner in the small board
+        if (_checkSmallBoardWinner(mainBoardIndex, miniBoardIndex)) {
+          _showWinDialog(currentPlayer);
+        }
+
+        // Toggle the current player
+        oTurn = !oTurn;
+
+        // Increment the filled boxes count
         filledBoxes++;
-      } else if (!oTurn && displayElement[index] == '') {
-        displayElement[index] = 'X';
-        filledBoxes++;
+
+        // Check for a draw or overall winner
+        _checkWinner();
       }
-      oTurn = !oTurn;
-      _checkWinner();
     });
   }
 
   void _checkWinner() {
-    if (displayElement[0] == displayElement[1] &&
-        displayElement[0] == displayElement[2] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
+    for (int row = 0; row < 9; row += 3) {
+      for (int col = 0; col < 9; col += 3) {
+        if (_checkSmallBoardWinner(row, col)) {
+          return;
+        }
+      }
     }
-    if (displayElement[3] == displayElement[4] &&
-        displayElement[3] == displayElement[5] &&
-        displayElement[3] != '') {
-      _showWinDialog(displayElement[3]);
-    }
-    if (displayElement[6] == displayElement[7] &&
-        displayElement[6] == displayElement[8] &&
-        displayElement[6] != '') {
-      _showWinDialog(displayElement[6]);
-    }
-    if (displayElement[0] == displayElement[3] &&
-        displayElement[0] == displayElement[6] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
-    }
-    if (displayElement[1] == displayElement[4] &&
-        displayElement[1] == displayElement[7] &&
-        displayElement[1] != '') {
-      _showWinDialog(displayElement[1]);
-    }
-    if (displayElement[2] == displayElement[5] &&
-        displayElement[2] == displayElement[8] &&
-        displayElement[2] != '') {
-      _showWinDialog(displayElement[2]);
-    }
-    if (displayElement[0] == displayElement[4] &&
-        displayElement[0] == displayElement[8] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
-    }
-    if (displayElement[2] == displayElement[4] &&
-        displayElement[2] == displayElement[6] &&
-        displayElement[2] != '') {
-      _showWinDialog(displayElement[2]);
-    } else if (filledBoxes == 9) {
+    if (filledBoxes == 81) {
       _showDrawDialog();
     }
+  }
+
+  bool _checkSmallBoardWinner(int row, int col) {
+    // Check each row in the small board
+    for (int r = row; r < row + 3; r++) {
+      if (displayElement[r][col] == displayElement[r][col + 1] &&
+          displayElement[r][col] == displayElement[r][col + 2] &&
+          displayElement[r][col] != '') {
+        _showWinDialog(displayElement[r][col]);
+        return true;
+      }
+    }
+
+    // Check each column in the small board
+    for (int c = col; c < col + 3; c++) {
+      if (displayElement[row][c] == displayElement[row + 1][c] &&
+          displayElement[row][c] == displayElement[row + 2][c] &&
+          displayElement[row][c] != '') {
+        _showWinDialog(displayElement[row][c]);
+        return true;
+      }
+    }
+
+    // Check diagonals in the small board
+    if (displayElement[row][col] == displayElement[row + 1][col + 1] &&
+        displayElement[row][col] == displayElement[row + 2][col + 2] &&
+        displayElement[row][col] != '') {
+      _showWinDialog(displayElement[row][col]);
+      return true;
+    }
+    if (displayElement[row][col + 2] == displayElement[row + 1][col + 1] &&
+        displayElement[row][col + 2] == displayElement[row + 2][col] &&
+        displayElement[row][col + 2] != '') {
+      _showWinDialog(displayElement[row][col + 2]);
+      return true;
+    }
+    return false;
   }
 
   void _showDrawDialog() {
@@ -230,7 +288,11 @@ class _HomePageState extends State<HomePage> {
       xScore = 0;
       oScore = 0;
       for (int i = 0; i < 9; i++) {
-        displayElement[i] = '';
+        displayElement[i] = [
+          '', '', '', //
+          '', '', '', //
+          '', '', '', //
+        ];
       }
     });
     filledBoxes = 0;
