@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktak/widgets/minitictactoe.dart';
 
 void main() {
   runApp(const MyApp());
@@ -96,34 +97,11 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Expanded(
-            flex: 4,
-            child: GridView.builder(
-                itemCount: 9,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _tapped(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: _getBorderColor(),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          displayElement[index],
-                          style:
-                              TextStyle(color: _getTextColor(), fontSize: 35),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          ),
+          MiniTicTacToe(
+              getBorderColor: _getBorderColor(),
+              displayElement: displayElement,
+              getTextColor: _getTextColor(),
+              tapped: _tapped),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
