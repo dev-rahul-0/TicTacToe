@@ -187,18 +187,31 @@ class _HomePageState extends State<HomePage> {
 
   void _tapped(int mainBoardIndex, int miniBoardIndex) {
     setState(() {
-      int row = mainBoardIndex ~/ 3 * 3 + miniBoardIndex ~/ 3;
-      int col = mainBoardIndex % 3 * 3 + miniBoardIndex % 3;
+      // Your logic here for what happens when a cell is tapped
+      // This is just a placeholder logic to put an 'X' or 'O'
+      String currentValue = displayElement[mainBoardIndex][miniBoardIndex];
+      // Check if the selected cell is empty
+      if (currentValue == '') {
+        // Determine the current player
+        String currentPlayer = oTurn ? 'O' : 'X';
 
-      if (oTurn && displayElement[row][col] == '') {
-        displayElement[row][col] = 'O';
+        // Update the selected cell with the current player's symbol
+        displayElement[mainBoardIndex][miniBoardIndex] = currentPlayer;
+
+        // Check for a winner in the small board
+        if (_checkSmallBoardWinner(mainBoardIndex, miniBoardIndex)) {
+          _showWinDialog(currentPlayer);
+        }
+
+        // Toggle the current player
+        oTurn = !oTurn;
+
+        // Increment the filled boxes count
         filledBoxes++;
-      } else if (!oTurn && displayElement[row][col] == '') {
-        displayElement[row][col] = 'X';
-        filledBoxes++;
+
+        // Check for a draw or overall winner
+        _checkWinner();
       }
-      oTurn = !oTurn;
-      _checkWinner();
     });
   }
 
