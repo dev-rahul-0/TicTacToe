@@ -31,7 +31,53 @@ class _HomePageState extends State<HomePage> {
   bool oTurn = true;
   int oScore = 0;
   int xScore = 0;
-  List<String> displayElement = ['', '', '', '', '', '', '', '', ''];
+  List<List<String>> displayElement = [
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ],
+    [
+      '', '', '', //
+      '', '', '', //
+      '', '', '', //
+    ]
+  ];
   int filledBoxes = 0;
   bool isDarkMode = false;
 
@@ -139,13 +185,16 @@ class _HomePageState extends State<HomePage> {
         : Color.fromARGB(255, 255, 0, 0);
   }
 
-  void _tapped(int index) {
+  void _tapped(int mainBoardIndex, int miniBoardIndex) {
     setState(() {
-      if (oTurn && displayElement[index] == '') {
-        displayElement[index] = 'O';
+      int row = mainBoardIndex ~/ 3 * 3 + miniBoardIndex ~/ 3;
+      int col = mainBoardIndex % 3 * 3 + miniBoardIndex % 3;
+
+      if (oTurn && displayElement[row][col] == '') {
+        displayElement[row][col] = 'O';
         filledBoxes++;
-      } else if (!oTurn && displayElement[index] == '') {
-        displayElement[index] = 'X';
+      } else if (!oTurn && displayElement[row][col] == '') {
+        displayElement[row][col] = 'X';
         filledBoxes++;
       }
       oTurn = !oTurn;
@@ -154,48 +203,53 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _checkWinner() {
-    if (displayElement[0] == displayElement[1] &&
-        displayElement[0] == displayElement[2] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
+    for (int row = 0; row < 9; row += 3) {
+      for (int col = 0; col < 9; col += 3) {
+        if (_checkSmallBoardWinner(row, col)) {
+          return;
+        }
+      }
     }
-    if (displayElement[3] == displayElement[4] &&
-        displayElement[3] == displayElement[5] &&
-        displayElement[3] != '') {
-      _showWinDialog(displayElement[3]);
-    }
-    if (displayElement[6] == displayElement[7] &&
-        displayElement[6] == displayElement[8] &&
-        displayElement[6] != '') {
-      _showWinDialog(displayElement[6]);
-    }
-    if (displayElement[0] == displayElement[3] &&
-        displayElement[0] == displayElement[6] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
-    }
-    if (displayElement[1] == displayElement[4] &&
-        displayElement[1] == displayElement[7] &&
-        displayElement[1] != '') {
-      _showWinDialog(displayElement[1]);
-    }
-    if (displayElement[2] == displayElement[5] &&
-        displayElement[2] == displayElement[8] &&
-        displayElement[2] != '') {
-      _showWinDialog(displayElement[2]);
-    }
-    if (displayElement[0] == displayElement[4] &&
-        displayElement[0] == displayElement[8] &&
-        displayElement[0] != '') {
-      _showWinDialog(displayElement[0]);
-    }
-    if (displayElement[2] == displayElement[4] &&
-        displayElement[2] == displayElement[6] &&
-        displayElement[2] != '') {
-      _showWinDialog(displayElement[2]);
-    } else if (filledBoxes == 9) {
+    if (filledBoxes == 81) {
       _showDrawDialog();
     }
+  }
+
+  bool _checkSmallBoardWinner(int row, int col) {
+    // Check each row in the small board
+    for (int r = row; r < row + 3; r++) {
+      if (displayElement[r][col] == displayElement[r][col + 1] &&
+          displayElement[r][col] == displayElement[r][col + 2] &&
+          displayElement[r][col] != '') {
+        _showWinDialog(displayElement[r][col]);
+        return true;
+      }
+    }
+
+    // Check each column in the small board
+    for (int c = col; c < col + 3; c++) {
+      if (displayElement[row][c] == displayElement[row + 1][c] &&
+          displayElement[row][c] == displayElement[row + 2][c] &&
+          displayElement[row][c] != '') {
+        _showWinDialog(displayElement[row][c]);
+        return true;
+      }
+    }
+
+    // Check diagonals in the small board
+    if (displayElement[row][col] == displayElement[row + 1][col + 1] &&
+        displayElement[row][col] == displayElement[row + 2][col + 2] &&
+        displayElement[row][col] != '') {
+      _showWinDialog(displayElement[row][col]);
+      return true;
+    }
+    if (displayElement[row][col + 2] == displayElement[row + 1][col + 1] &&
+        displayElement[row][col + 2] == displayElement[row + 2][col] &&
+        displayElement[row][col + 2] != '') {
+      _showWinDialog(displayElement[row][col + 2]);
+      return true;
+    }
+    return false;
   }
 
   void _showDrawDialog() {
@@ -221,7 +275,11 @@ class _HomePageState extends State<HomePage> {
       xScore = 0;
       oScore = 0;
       for (int i = 0; i < 9; i++) {
-        displayElement[i] = '';
+        displayElement[i] = [
+          '', '', '', //
+          '', '', '', //
+          '', '', '', //
+        ];
       }
     });
     filledBoxes = 0;
