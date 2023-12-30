@@ -2,6 +2,11 @@
 
 SuperTicTacToe-Flutter, a fun and strategic adaptation of the classic Tic-Tac-Toe game built with the Flutter framework. Super Tic-Tac-Toe adds an exciting twist to the traditional game by challenging players to win not only in individual mini-grids but also strategically control the larger grid.
 
+
+[![Video](https://img.youtube.com/vi/_Na3a1ZrX7c/0.jpg)](https://youtube.com/shorts/_Na3a1ZrX7c?si=GweQBETH7NBl1olK)
+
+
+
 ## Screenshots
 
 <img src="screenshots/Screenshot from 2023-12-30 11-47-12.png" alt="Widget Toast Image" style="zoom:33%;" />
@@ -9,7 +14,6 @@ SuperTicTacToe-Flutter, a fun and strategic adaptation of the classic Tic-Tac-To
 | Screenshot 1 | Screenshot 2 |
 | --- | --- |
 | <img src="screenshots/Screenshot from 2023-12-30 11-50-17.png" alt="Screenshot 1" style="zoom:33%;" /> | <img src="screenshots/Screenshot from 2023-12-30 11-58-31.png" alt="Screenshot 2" style="zoom:33%;" /> |
-
 
 
 
