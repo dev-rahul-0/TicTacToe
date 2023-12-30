@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktak/widgets/mainboard.dart';
 import 'package:tiktak/widgets/minitictactoe.dart';
 
 void main() {
@@ -97,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MiniTicTacToe(
+          MainBoard(
               getBorderColor: _getBorderColor(),
               displayElement: displayElement,
               getTextColor: _getTextColor(),

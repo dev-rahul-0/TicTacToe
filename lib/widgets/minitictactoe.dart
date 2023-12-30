@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MiniTicTacToe extends StatelessWidget {
   final void Function(int)? tapped;
   final Color getBorderColor;
-  final List displayElement;
+  final List<String> displayElement;
   final Color getTextColor;
   const MiniTicTacToe({
     super.key,
