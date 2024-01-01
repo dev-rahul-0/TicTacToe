@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  runApp(MyApp(prefs: prefs));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences prefs;
+
+  const MyApp({super.key, required this.prefs});
 
   @override
   Widget build(BuildContext context) {
@@ -13,19 +18,28 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const HomePage(),
+      themeMode: _getThemeMode(),
+      home: HomePage(
+        prefs: prefs,
+      ),
     );
+  }
+
+  ThemeMode _getThemeMode() {
+    bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final SharedPreferences prefs;
+  const HomePage({super.key, required this.prefs});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool oTurn = true;
   int oScore = 0;
   int xScore = 0;
@@ -34,16 +48,48 @@ class _HomePageState extends State<HomePage> {
   bool isDarkMode = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _loadThemeMode();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _saveThemeMode(isDarkMode);
+    }
+  }
+
+  _loadThemeMode() {
+    bool savedIsDarkMode = widget.prefs.getBool('isDarkMode') ?? false;
+    setState(() {
+      isDarkMode = savedIsDarkMode;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tic Tac Toe'),
+        backgroundColor: isDarkMode ? Colors.black38 : Colors.white,
+        title: Text(
+          'Tic Tac Toe',
+          style: TextStyle(color: _getTextColor()),
+        ),
         actions: [
           IconButton(
             icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
             onPressed: () {
               setState(() {
                 isDarkMode = !isDarkMode;
+                _saveThemeMode(isDarkMode);
               });
             },
           ),
@@ -257,5 +303,11 @@ class _HomePageState extends State<HomePage> {
     } else if (winner == 'X') {
       xScore++;
     }
+  }
+
+  // Save Theme Mode here,
+  Future<void> _saveThemeMode(bool isDarkMode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', isDarkMode);
   }
 }
