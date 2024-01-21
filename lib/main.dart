@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               children: [
                 ElevatedButton(
                   onPressed: _clearScoreBoard,
-                  child: Text("Clear Score Board"),
+                  child: const Text("Clear Score Board"),
                 )
               ],
             ),
