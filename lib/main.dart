@@ -195,14 +195,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void _tapped(int index) {
+    if (displayElement[index].isNotEmpty) return;
+
     setState(() {
-      if (oTurn && displayElement[index] == '') {
-        displayElement[index] = 'O';
-        filledBoxes++;
-      } else if (!oTurn && displayElement[index] == '') {
-        displayElement[index] = 'X';
-        filledBoxes++;
-      }
+      displayElement[index] = oTurn ? 'O' : 'X';
+      filledBoxes++;
       oTurn = !oTurn;
       _checkWinner();
     });
